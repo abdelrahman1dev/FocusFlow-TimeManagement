@@ -1,14 +1,11 @@
 import React from 'react'
-import Timer from './components/Timer'
-import ToDos from './components/ToDos'
-import Habbits from './components/Habbits'
+import TabToggle from './components/TabToggle'
 
 function App() {
   return (
-    <div>
-      <Timer />
-      <ToDos />
-      <Habbits />
+    <div className=''>
+      <TabToggle />
+
     </div>
   )
 }

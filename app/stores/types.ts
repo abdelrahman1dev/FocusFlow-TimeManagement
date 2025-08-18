@@ -3,24 +3,24 @@
 // Counter store types
 
 
-// Task types
 export interface Task {
   id: string;
-  title: string;
+  text: string;
   completed: boolean;
+  priority: 'urgent' | 'normal';
   createdAt: Date;
 }
 
-// Task store types
 export interface TaskState {
   tasks: Task[];
-  addTask: (title: string) => void;
+  addTask: (text: string, priority: 'urgent' | 'normal') => void;
   toggleTask: (id: string) => void;
   removeTask: (id: string) => void;
   clearCompleted: () => void;
   getCompletedTasks: () => Task[];
   getPendingTasks: () => Task[];
 }
+
 
 // User types
 
