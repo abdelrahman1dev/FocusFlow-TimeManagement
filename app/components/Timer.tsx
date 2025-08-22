@@ -2,14 +2,14 @@
 import { useState } from "react";
 
 import { useCountdownStore } from "../stores/Timer";
-import { useCountdown } from "../hooks/useCountdown";
+import { useTicker } from "../hooks/useTicker";
 
 
 export default function Countdown() {
   const { time, start, pause, reset, isRunning } = useCountdownStore();
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
-  useCountdown();
+  useTicker();
 
   // Format time as mm:ss
   const formatTime = (totalSeconds: number) => {

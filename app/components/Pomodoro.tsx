@@ -1,5 +1,6 @@
 "use client"
-import { useEffect , useState } from 'react'
+import {  useEffect , useState } from 'react'
+import { useTicker } from '../hooks/useTicker'
 import React from 'react'
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -65,22 +66,8 @@ function Pomodoro() {
   }, [tasks, selectedTask]);
 
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (isRunning) {
-      interval = setInterval(() => tick() , 1000);
-    }
 
-    return () => {
-       if (interval) clearInterval(interval)
-    }
-     
-    
-
-  }
-  ,[tick,isRunning]
-
-)
+ useTicker();
 
   useEffect(() => {
     console.log(pomodoroHistory)
