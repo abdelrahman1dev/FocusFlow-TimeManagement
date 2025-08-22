@@ -1,16 +1,21 @@
 import { create } from 'zustand';
-import { TaskState, Task } from './types';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { TaskState, Task } from './types';
+import { usePomodoroStore } from './pomodoroStore';
+
+
+
 
 export const useTaskStore = create<TaskState>()(
   persist(
     (set, get) => ({
       tasks: [],
       
-      addTask: (text: string, priority: 'urgent' | 'normal' = 'normal') => {
+      addTask: ( text: string, describtion: string,  priority: 'urgent' | 'normal' = 'normal') => {
         const newTask: Task = {
           id: Date.now().toString(),
           text: text.trim(),
+          describtion: describtion.trim(),
           completed: false,
           priority,
           createdAt: new Date(),
@@ -27,15 +32,26 @@ export const useTaskStore = create<TaskState>()(
       },
       
       removeTask: (id: string) => {
-        set((state) => ({
-          tasks: state.tasks.filter((task) => task.id !== id),
-        }));
+        set((state) => {
+          const removed = state.tasks.find((task) => task.id === id);
+          const newTasks = state.tasks.filter((task) => task.id !== id);
+          // If the removed task is the currently selected pomodoro task, clear it
+          if (removed && usePomodoroStore.getState().selectedTask === removed.text) {
+            usePomodoroStore.getState().setSelectedTask("");
+          }
+          return { tasks: newTasks };
+        });
       },
       
       clearCompleted: () => {
-        set((state) => ({
-          tasks: state.tasks.filter((task) => !task.completed),
-        }));
+        set((state) => {
+          const completed = state.tasks.filter((task) => task.completed).map(t => t.text);
+          // If the currently selected task is among the completed ones, clear it
+          if (usePomodoroStore.getState().selectedTask && completed.includes(usePomodoroStore.getState().selectedTask)) {
+            usePomodoroStore.getState().setSelectedTask("");
+          }
+          return { tasks: state.tasks.filter((task) => !task.completed) };
+        });
       },
       
       getCompletedTasks: () => {

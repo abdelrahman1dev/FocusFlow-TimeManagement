@@ -1,7 +1,7 @@
 import React from 'react'
-import Timer from './Timer'
+import Pomodoro from './Pomodoro'
 import ToDos from './ToDos'
-import Habbits from './Habbits'
+import Timer from './Timer'
 import {
   Tabs,
   TabsContent,
@@ -14,19 +14,19 @@ function TabToggle() {
         <Tabs defaultValue='ToDo' defaultChecked>
             <TabsList>
                 <TabsTrigger  value="ToDo">To-Do</TabsTrigger>
-                <TabsTrigger  value="timer">Timer</TabsTrigger>
-                <TabsTrigger value="Habbits">Habbits</TabsTrigger>
+                <TabsTrigger  value="Pomodoro">pomodoro</TabsTrigger>
+                <TabsTrigger value="Timer">Timer</TabsTrigger>
             </TabsList>
             <TabsContent value='ToDo'>
                       <ToDos />
             </TabsContent>
-            <TabsContent value='timer'>
+            <TabsContent value='Pomodoro'>
                      
-            <Timer />
+            <Pomodoro />
             </TabsContent>
-            <TabsContent value='Habbits'>
+            <TabsContent value='Timer'>
                       
-      <Habbits />
+      <Timer />
             </TabsContent>
 
 

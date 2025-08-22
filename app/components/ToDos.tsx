@@ -26,6 +26,7 @@ function ToDos() {
   const tasks = useTaskStore((state) => state.tasks);
   const addTask = useTaskStore((state) => state.addTask);
   const [text, setText] = useState('');
+  const [describtion, setDescribtion] = useState('');
   const [priority, setPriority] = useState<'urgent' | 'normal'>('normal');
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -33,8 +34,9 @@ function ToDos() {
     e.preventDefault();
     if (!text.trim()) return;
     
-    addTask(text, priority);
+    addTask(text , describtion, priority  );
     setText('');
+    setDescribtion('');
     setPriority('normal');
     
     // Close the dialog
@@ -82,6 +84,9 @@ function ToDos() {
                     placeholder="Enter your task..." 
                     required
                   />
+                  <textarea
+                  className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 mt-1" 
+                  placeholder='enter ur task description' name="" id="describtion-input" value={describtion} onChange={(e) => setDescribtion(e.target.value)} />
                 </div>
 
                 <div>
@@ -133,7 +138,7 @@ function ToDos() {
             No tasks yet. Add your first task above! 📝
           </p>
         ) : (
-          <ul className="space-y-1">
+          <ul className="space-y-1 w-full">
             {sortedTasks.map(task => (
               <ToDoItem key={task.id} {...task} />
             ))}
