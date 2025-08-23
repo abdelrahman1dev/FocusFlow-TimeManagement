@@ -35,7 +35,7 @@ export const usePomodoroStore = create<PomodoroState>()(
 
       setSelectedTask: (task: string) => set({ selectedTask: task }),
 
-      
+
       newTimer: () => set({
         mode: "focus",
         timeLeft: DURATIONS.focus,
@@ -62,24 +62,30 @@ export const usePomodoroStore = create<PomodoroState>()(
         // Play a short beep on completion
         try {
           if (typeof window !== "undefined") {
-            const AudioCtx = (window.AudioContext || (window as any).webkitAudioContext);
-            const ctx = new AudioCtx();
-            const o = ctx.createOscillator();
-            const g = ctx.createGain();
-            o.type = "sine";
-            o.frequency.value = mode === "focus" ? 1000 : 600;
-            o.connect(g);
-            g.connect(ctx.destination);
-            g.gain.setValueAtTime(0, ctx.currentTime);
-            o.start();
-            g.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.02);
-            setTimeout(() => {
-              g.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-              o.stop();
-              try { ctx.close(); } catch (e) {}
-            }, 350);
+            const wnd = window as unknown as {
+              AudioContext?: typeof AudioContext;
+              webkitAudioContext?: typeof AudioContext;
+            };
+            const AudioCtx = wnd.AudioContext ?? wnd.webkitAudioContext;
+            if (AudioCtx) {
+              const ctx = new AudioCtx();
+              const o = ctx.createOscillator();
+              const g = ctx.createGain();
+              o.type = "sine" as OscillatorType;
+              o.frequency.value = mode === "focus" ? 1000 : 600;
+              o.connect(g);
+              g.connect(ctx.destination);
+              g.gain.setValueAtTime(0, ctx.currentTime);
+              o.start();
+              g.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.02);
+              setTimeout(() => {
+                g.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+                o.stop();
+                try { ctx.close(); } catch { }
+              }, 350);
+            }
           }
-        } catch (e) {
+        } catch {
           // ignore audio errors
         }
 
@@ -91,7 +97,7 @@ export const usePomodoroStore = create<PomodoroState>()(
               const body = mode === "focus" ? "Time for a break — you've earned it." : "Break over — back to work.";
               try {
                 new Notification(title, { body });
-              } catch (e) {
+              } catch {
                 // some browsers require service worker or additional options; ignore
               }
             };
@@ -104,7 +110,7 @@ export const usePomodoroStore = create<PomodoroState>()(
               });
             }
           }
-        } catch (e) {
+        } catch {
           // ignore notification errors
         }
 

@@ -70,7 +70,7 @@ function Pomodoro() {
 
   useEffect(() => {
     console.log(pomodoroHistory)
-  },[])
+  },[pomodoroHistory])
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;

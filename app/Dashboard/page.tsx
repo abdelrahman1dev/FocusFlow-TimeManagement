@@ -1,39 +1,33 @@
 "use client"
-import React from 'react'
-import { Button } from "@/components/ui/button"
+import React from "react"
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { Label } from "@/components/ui/label"
-
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <button className="bg-background rounded-md text-black p-1" >Report</button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>your report</DialogTitle>
-            <DialogDescription>
-              here is your report for today
-            </DialogDescription>
-          </DialogHeader>
-    
-        
-        </DialogContent>
-      </form>
+      <DialogTrigger asChild>
+        <button className="bg-background rounded-md text-black p-1">
+          Report
+        </button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Your report</DialogTitle>
+          <DialogDescription>
+            Here is your report for today
+          </DialogDescription>
+        </DialogHeader>
+        <form>
+          {/* Form fields go here if needed */}
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }
-
-export default Dashboard
