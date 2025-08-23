@@ -1,22 +1,34 @@
+"use client"
 import React from 'react'
 import Pomodoro from './Pomodoro'
 import ToDos from './ToDos'
 import Timer from './Timer'
+
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import Dashboard from '../Dashboard/page'
 function TabToggle() {
   return (
-    <div className='container flex flex-col w-100 h-auto bg-black p-4 my-4'>
+   
+          <div className='container flex flex-col w-100 h-auto bg-black p-4 my-4'>
         <Tabs defaultValue='ToDo' defaultChecked>
-            <TabsList>
+         <div className='flex items-center justify-between'>
+             <TabsList>
                 <TabsTrigger  value="ToDo">To-Do</TabsTrigger>
                 <TabsTrigger  value="Pomodoro">pomodoro</TabsTrigger>
                 <TabsTrigger value="Timer">Timer</TabsTrigger>
+
             </TabsList>
+                             <div>
+
+        <Dashboard />
+
+    </div>
+         </div>
             <TabsContent value='ToDo'>
                       <ToDos />
             </TabsContent>
@@ -34,15 +46,10 @@ function TabToggle() {
 
 
         </Tabs>
-      
-
-
-
-
-
-
-
     </div>
+
+
+ 
   )
 }
 

@@ -28,7 +28,6 @@ function Pomodoro() {
 
   const {
     timeLeft , 
-    tick ,
     isRunning ,
     startTimer ,
     resetTimer ,
@@ -117,7 +116,7 @@ function Pomodoro() {
             <div className="my-4">
         
            {
-            tasks.length > 0 ? 
+            tasks.length > 0 && tasks.filter(t => !t.completed).length > 0 ? 
              <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button

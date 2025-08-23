@@ -1,13 +1,8 @@
 import App from "./App";
-import Link from "next/link";
 
 export default function Home() {
   return (
-    <><div>
-      <Link href="/Dashboard">
-        <button>Go to Dashboard</button>
-      </Link>
-    </div><div
+    <><div
       className="bg-gray-100 flex flex-col items-center justify-center min-h-screen"
     >
         <div className="text-center capitalize text-gray-800 max-w-sm l">
