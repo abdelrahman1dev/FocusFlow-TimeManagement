@@ -7,7 +7,7 @@ function ToDoItem({ id, text, completed, priority, describtion }: Task) {
 const removeTask = useTaskStore((state) => state.removeTask);
 
   return (
-    <li className="flex justify-between items-center gap-5 w-full p-2 border-b border-gray-600">
+    <li className="flex justify-between items-center gap-5 max-w-full p-2 border-b border-gray-600 overflow-x-hidden">
       <input 
         type="checkbox" 
         checked={completed}  
@@ -19,7 +19,7 @@ const removeTask = useTaskStore((state) => state.removeTask);
           {text}
         </span>
 
-        <p>
+        <p className='text-sm text-gray-400 '>
           {describtion}
         </p>
         </div>

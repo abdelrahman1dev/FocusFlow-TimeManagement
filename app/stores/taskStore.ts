@@ -10,6 +10,7 @@ export const useTaskStore = create<TaskState>()(
   persist(
     (set, get) => ({
       tasks: [],
+      completedTasks: [],
       
       addTask: ( text: string, describtion: string,  priority: 'urgent' | 'normal' = 'normal') => {
         const newTask: Task = {
@@ -22,7 +23,6 @@ export const useTaskStore = create<TaskState>()(
         };
         set((state) => ({ tasks: [...state.tasks, newTask] }));
       },
-      
       toggleTask: (id: string) => {
         set((state) => ({
           tasks: state.tasks.map((task) =>

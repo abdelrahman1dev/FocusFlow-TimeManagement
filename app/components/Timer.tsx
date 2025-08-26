@@ -3,12 +3,14 @@ import { useState } from "react";
 
 import { useCountdownStore } from "../stores/Timer";
 import { useTicker } from "../hooks/useTicker";
+import { Pause, Play, RotateCw } from "lucide-react";
 
 
 export default function Countdown() {
   const { time, start, pause, reset, isRunning } = useCountdownStore();
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(10);
+  const [isRotating, setIsRotating] = useState(false);
   useTicker();
 
   // Format time as mm:ss
@@ -48,25 +50,40 @@ export default function Countdown() {
       </div>
 
       {/* Controls */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 ">
+
+
+        {
+          /* single button that animates between Play and Pause */
+        }
         <button
-          className="px-4 py-2 rounded bg-green-500 text-white"
-          onClick={() => start(minutes * 60 + seconds)}
+          className="relative px-4 py-2 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-36"
+          onClick={() => (isRunning ? pause() : start(minutes * 60 + seconds))}
+          aria-pressed={isRunning}
         >
-          Start
+          {/* Pause layer (visible when running) */}
+          <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+            <Pause className="border-none fill-white text-white" />
+            <span className="select-none">Pause</span>
+          </span>
+
+          {/* Play layer (visible when not running) */}
+          <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+            <Play className="border-none fill-white text-white" />
+            <span className="select-none">Start</span>
+          </span>
         </button>
-        <button
-          className="px-4 py-2 rounded bg-yellow-500 text-white"
-          onClick={pause}
-          disabled={!isRunning}
+      <button
+          className="px-2 py-2 bg-red-900 text-white rounded-full"
+          onClick={() => {
+            setIsRotating(true);
+            reset();
+            // stop the spin after animation ends
+            setTimeout(() => setIsRotating(false), 600);
+          }}
+          aria-label="reset countdown"
         >
-          Pause
-        </button>
-        <button
-          className="px-4 py-2 rounded bg-red-500 text-white"
-          onClick={reset}
-        >
-          Reset
+          <RotateCw className={isRotating ? 'spin-once' : ''} />
         </button>
       </div>
     </div>

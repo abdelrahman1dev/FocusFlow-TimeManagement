@@ -3,18 +3,13 @@ import { persist, createJSONStorage } from "zustand/middleware";
 
 type Mode = "focus" | "shortBreak" | "longBreak";
 
-import { PomodoroSession , PomodoroState } from "./types";
+import { PomodoroSession, PomodoroState } from "./types";
 
 const DURATIONS = {
-  focus: 5,
-  shortBreak: 3,
-  longBreak: 2,
+  focus: 1,
+  shortBreak: 1,
+  longBreak: 1,
 };
-
-
-
-
-
 
 export const usePomodoroStore = create<PomodoroState>()(
   persist(
@@ -25,23 +20,26 @@ export const usePomodoroStore = create<PomodoroState>()(
       isRunning: false,
       completedPomodoros: 0,
       pomodoroHistory: [],
-      
-     
-      startTimer: () => set({ isRunning: true ,}),
+
+      startTimer: () => set({ isRunning: true }),
       pauseTimer: () => set({ isRunning: false }),
 
       resetTimer: () =>
-        set((state) => ({ timeLeft: DURATIONS[state.mode], isRunning: false })),
+        set((state) => ({
+          timeLeft: DURATIONS[state.mode],
+          isRunning: false,
+        })),
 
       setSelectedTask: (task: string) => set({ selectedTask: task }),
 
+      newTimer: () =>
+        set({
+          mode: "focus",
+          timeLeft: DURATIONS.focus,
+          isRunning: false,
+          completedPomodoros: 0,
+        }),
 
-      newTimer: () => set({
-        mode: "focus",
-        timeLeft: DURATIONS.focus,
-        isRunning: false,
-        completedPomodoros: 0,
-      }),
       tick: () => {
         const { timeLeft, isRunning } = get();
         if (!isRunning) return;
@@ -81,7 +79,9 @@ export const usePomodoroStore = create<PomodoroState>()(
               setTimeout(() => {
                 g.gain.linearRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
                 o.stop();
-                try { ctx.close(); } catch { }
+                try {
+                  ctx.close();
+                } catch {}
               }, 350);
             }
           }
@@ -93,8 +93,12 @@ export const usePomodoroStore = create<PomodoroState>()(
         try {
           if (typeof window !== "undefined" && "Notification" in window) {
             const send = () => {
-              const title = mode === "focus" ? "Pomodoro complete" : "Break complete";
-              const body = mode === "focus" ? "Time for a break — you've earned it." : "Break over — back to work.";
+              const title =
+                mode === "focus" ? "Pomodoro complete" : "Break complete";
+              const body =
+                mode === "focus"
+                  ? "Time for a break — you've earned it."
+                  : "Break over — back to work.";
               try {
                 new Notification(title, { body });
               } catch {
@@ -118,8 +122,9 @@ export const usePomodoroStore = create<PomodoroState>()(
         const session: PomodoroSession = {
           id: crypto.randomUUID(),
           mode,
-          duration: DURATIONS[mode] / 60,
+          duration: DURATIONS[mode], // ✅ minutes
           completedAt: new Date(),
+          task: get().selectedTask || "", // ✅ save task
         };
 
         set((state) => ({
@@ -139,6 +144,17 @@ export const usePomodoroStore = create<PomodoroState>()(
         } else {
           get().switchMode("focus");
         }
+      },
+
+      getTaskStats: () => {
+        const history = get().pomodoroHistory;
+        const stats: Record<string, number> = {};
+        history.forEach((session) => {
+          if (session.task) {
+            stats[session.task] = (stats[session.task] || 0) + 1;
+          }
+        });
+        return stats;
       },
     }),
     {

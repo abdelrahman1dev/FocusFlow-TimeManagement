@@ -21,6 +21,7 @@ export interface PomodoroSession {
   mode: Mode;
   duration: number; // in minutes
   completedAt: Date;
+  task?: string;
 }
 
 export interface PomodoroState {
@@ -31,6 +32,7 @@ export interface PomodoroState {
   completedPomodoros: number;
   pomodoroHistory: PomodoroSession[];
 
+  addPomodoroHistory?: (entry: { mode: string; task: string; duration: number }) => void;
 
   setSelectedTask: (task: string) => void;
   startTimer: () => void;
@@ -39,12 +41,14 @@ export interface PomodoroState {
   newTimer: () => void;
   tick: () => void;
   switchMode: (mode: Mode) => void;
+  getTaskStats: () => Record<string, number>;
   completeSession: () => void;
 }
 
 
 export interface TaskState {
   tasks: Task[];
+  completedTasks: Task[];
   addTask: (text: string, describtion: string, priority: 'urgent' | 'normal') => void;
   toggleTask: (id: string) => void;
   removeTask: (id: string) => void;

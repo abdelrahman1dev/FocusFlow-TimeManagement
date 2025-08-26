@@ -8,13 +8,16 @@ interface CountdownState {
   pause: () => void;
   reset: () => void;
   tick: () => void;
+  accumulatedSeconds: number; // total seconds elapsed on the countdown timer
+  getAccumulatedSeconds: () => number;
 }
 
 export const useCountdownStore = create<CountdownState>()(
   persist(
     (set, get) => ({
-      time: 0,
-      isRunning: false,
+  time: 0,
+  isRunning: false,
+  accumulatedSeconds: 0,
 
       start: (seconds) =>
         set({ time: seconds, isRunning: true }),
@@ -27,12 +30,14 @@ export const useCountdownStore = create<CountdownState>()(
         if (!get().isRunning) return;
         set((state) => {
           if (state.time > 0) {
-            return { time: state.time - 1 };
+            return { time: state.time - 1, accumulatedSeconds: state.accumulatedSeconds + 1 };
           } else {
             return { isRunning: false };
           }
         });
       },
+
+      getAccumulatedSeconds: () => get().accumulatedSeconds,
     }),
     {
       name: "countdown-storage", // key in localStorage

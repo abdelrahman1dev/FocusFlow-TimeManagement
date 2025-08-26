@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "./components/Footer";
+import ReportTabs from "./components/ReportTabs";
 
 
 
@@ -23,7 +24,9 @@ export default function RootLayout({
       <body
         className={` antialiased px-5 bg-white`}
       >
-  <main>{children}</main>
+  <main>
+    <ReportTabs>{children}</ReportTabs>
+  </main>
   <Footer />
       </body>
     </html>

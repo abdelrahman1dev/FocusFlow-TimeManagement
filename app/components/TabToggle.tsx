@@ -25,7 +25,6 @@ function TabToggle() {
             </TabsList>
                              <div>
 
-        <Dashboard />
 
     </div>
          </div>
