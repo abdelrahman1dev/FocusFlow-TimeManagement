@@ -14,10 +14,10 @@ export default function DashboardPage(){
   const countdownSeconds = useCountdownStore((s) => s.getAccumulatedSeconds());
 
   const pomodoroMinutes = useMemo(
-    () => pomHistory.reduce((sum, s) => sum + (s.duration || 0), 0),
+    () => pomHistory.reduce((sum, s) => sum + (s.duration || 0) / 60, 0),
     [pomHistory]
   );
-  const countdownMinutes = Math.floor(Number(countdownSeconds) / 60);
+  const countdownMinutes = Math.floor(countdownSeconds / 60);
   const totalMinutes = useMemo(
     () => pomodoroMinutes + countdownMinutes,
     [pomodoroMinutes, countdownMinutes]
@@ -39,15 +39,15 @@ export default function DashboardPage(){
 
         <div className="p-4 bg-white rounded shadow">
           <h2 className="font-semibold">Time Summary</h2>
-          <p className="mt-2">Pomodoro minutes: <strong>{pomodoroMinutes}</strong></p>
-          <p>Countdown minutes: <strong>{countdownMinutes}</strong></p>
-          <p className="mt-2">Total minutes: <strong>{totalMinutes}</strong></p>
+          <p className="mt-2">Pomodoro minutes: <strong>{pomodoroMinutes }</strong></p>
+          <p>Countdown minutes: <strong>{countdownMinutes }</strong></p>
+          <p className="mt-2">Total minutes: <strong>{totalMinutes }</strong></p>
           
           <h3 className="mt-4 font-medium">Pomodoro History</h3>
           <ul className="mt-2 text-sm space-y-1">
             {pomHistory.map(p => (
               <li key={p.id} className="text-gray-700">
-                {p.task} — {p.duration} min — {new Date(p.completedAt).toLocaleString()}
+                {p.task} — {p.duration / 60} min — {new Date(p.completedAt).toLocaleString()}
               </li>
             ))}
           </ul>

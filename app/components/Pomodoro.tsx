@@ -36,16 +36,15 @@ function Pomodoro() {
     completedPomodoros,
     selectedTask,
     newTimer,
-    pomodoroHistory
     
     
   } = usePomodoroStore();
 
   // default durations (seconds) for modes, used to compute circular progress
   const DEFAULT_DURATIONS: Record<string, number> = {
-    focus: 25 * 60,
-    shortBreak: 5 * 60,
-    longBreak: 15 * 60,
+    focus: 1 * 60,
+    shortBreak: 1 * 60,
+    longBreak: 1 * 60,
   };
 
   const [initialDuration, setInitialDuration] = useState<number>(DEFAULT_DURATIONS[mode] ?? 0);
@@ -89,9 +88,6 @@ function Pomodoro() {
 
   const [isRotating, setIsRotating] = useState(false);
 
-  useEffect(() => {
-    console.log(pomodoroHistory)
-  },[pomodoroHistory])
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -136,7 +132,7 @@ function Pomodoro() {
 
           <h1 className="text-2xl font-bold z-10">{minutes}:{seconds.toString().padStart(2, "0")}</h1>
         </div>
-        <p className="text-gray-400">Time Left: {Math.floor(timeLeft / 60)} mins</p>
+        <p className="text-gray-400">Time Left: {Math.floor(minutes)} mins</p>
         <div>
           <div className='flex flex-col gap-3 justify-center mt-4 items-center'>
    <div className='flex flex-row gap-3 items-center'>
