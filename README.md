@@ -1,40 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⏱️ FocusFlow – Time Management App  
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)  
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)](https://www.typescriptlang.org/)  
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)  
+[![Zustand](https://img.shields.io/badge/Zustand-FFB86C?logo=react&logoColor=white)](https://zustand-demo.pmnd.rs/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
 
-## Getting Started
+FocusFlow is a modern **time management web app** designed to boost productivity using the **Pomodoro Technique** and task tracking.  
+It helps students, professionals, and teams stay focused with a clean interface, customizable timers, and progress tracking.  
 
-First, run the development server:
+---
 
+## 🎬 Preview  
+
+### GIF Demo  
+![App Demo](./public/preview/chrome_oFxujRa7Sp.gif)  
+
+### Screenshots  
+| Dashboard | Pomodoro Timer | To-Do List | Reports |
+|-----------|----------------|------------|---------|
+| ![Dashboard](./public/preview/todo-screenshot.png) | ![Timer](./public/preview/report-screenshot.png) | ![ToDos](./public/preview/pomodoro-screenshot.png.png) | ![Reports](./public/preview/countdowen-screenshot.png) |
+
+---
+
+## ✨ Features
+- 🔥 **Pomodoro Timer** – Work & break sessions with countdown.  
+- ✅ **Task Management** – Add, edit, and track to-dos.  
+- 📊 **Reports & Analytics** – View productivity stats.  
+- 📱 **Responsive Design** – Works on desktop & mobile.  
+- ⚡ **State Management** with **Zustand** (lightweight & persistent).  
+- 🎨 **Modern UI** powered by **Tailwind CSS + Shadcn/UI**.  
+- 🚀 Built with **Next.js + TypeScript** for scalability.  
+
+---
+
+## 🛠️ Tech Stack
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)  
+- **Language**: TypeScript  
+- **Styling**: Tailwind CSS v4 + Shadcn/UI  
+- **State Management**: Zustand  
+- **Icons & Assets**: Lucide & SVGs  
+- **Build Tools**: PostCSS, ESLint, Vercel-ready  
+
+---
+
+## 📂 Project Structure
+```
+FocusFlow-TimeManagement/
+├── app/                 # Main Next.js app (pages, layouts, global styles)
+│   ├── Dashboard/       # Dashboard page
+│   ├── components/      # App-specific components (Timer, Pomodoro, ToDos...)
+│   ├── hooks/           # Custom React hooks
+│   ├── stores/          # Zustand stores (task + pomodoro state)
+│   └── globals.css      # Global styles
+│
+├── components/          # Shared UI components (Shadcn/UI setup)
+│   └── ui/              # Button, Dialog, Tabs, Popover, etc.
+│
+├── lib/                 # Utility functions
+├── public/              # Static assets (SVGs, icons, screenshots, GIFs)
+├── package.json         # Dependencies & scripts
+└── README.md            # Project docs
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/abdelrahman1dev/FocusFlow-TimeManagement.git
+cd FocusFlow-TimeManagement
+```
+
+### 2️⃣ Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3️⃣ Run development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open **http://localhost:3000** in your browser 🎉  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📖 Usage
+1. Start the **Pomodoro Timer** from the dashboard.  
+2. Add tasks in the **To-Do List** to organize your work.  
+3. Track progress in the **Reports Tab**.  
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🗺️ Roadmap
+- [ ] Add **user authentication** (Supabase/Auth.js).  
+- [ ] Sync tasks & reports to cloud.  
+- [ ] Export productivity reports (CSV/PDF).  
+- [ ] Team collaboration mode.  
+- [ ] Mobile app (React Native).  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
+Contributions are welcome!  
+1. Fork the project  
+2. Create a feature branch (`git checkout -b feature/my-feature`)  
+3. Commit changes (`git commit -m 'Add new feature'`)  
+4. Push to branch (`git push origin feature/my-feature`)  
+5. Open a Pull Request 🎉  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-git clone https://github.com/abdelrahman1dev/FocusFlow-TimeManagement.git
-cd FocusFlow-TimeManagement
+## 📜 License
+This project is licensed under the **MIT License**.  
+Feel free to use and modify for personal or commercial projects.  
