@@ -97,7 +97,7 @@ function Pomodoro() {
   const seconds = timeLeft % 60;
 
   return (
-  <div className="w-lg mx-auto p-4 my-6">
+  <div className="w-sm lg:w-lg mx-auto p-4 my-6">
   <div className="text-white">
     <h1 className="text-2xl font-bold capitalize  flex flex-col  justify-between items-start mb-6">pomodoro timer</h1>
     <div className="bg-gray-800 rounded-lg p-4">
@@ -117,7 +117,7 @@ function Pomodoro() {
         )}
         <h2 className="text-2xl font-bold">{mode.toUpperCase()}</h2>
 
-  <div className="relative flex items-center justify-center w-36 h-36 mx-auto mb-3">
+  <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36 mx-auto mb-3">
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120" aria-hidden>
             <g transform="translate(60,60)">
               <circle r="54" fill="transparent" stroke="#2d3748" strokeWidth="12" />
@@ -138,21 +138,21 @@ function Pomodoro() {
         </div>
         <p className="text-gray-400">Time Left: {Math.floor(timeLeft / 60)} mins</p>
         <div>
-          <div className='flex flex-col space-x-3 justify-center mt-4 items-center'>
-   <div className='flex flex-row gap-3'>
+          <div className='flex flex-col gap-3 justify-center mt-4 items-center'>
+   <div className='flex flex-row gap-3 items-center'>
              <button
-              className="relative px-4 py-2 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-36"
+              className="relative lg:px-4 lg:h-12  lg:py-2 p-4 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-25 lg:w-36 "
               onClick={() => (isRunning ? pauseTimer() : startTimer())}
               aria-pressed={isRunning}
             >
               <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
                 <Pause className="border-none fill-white text-white" />
-                <span className="select-none">Pause</span>
+                <span className="select-none hidden lg:block">Pause</span>
               </span>
 
               <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
                 <Play className="border-none fill-white text-white" />
-                <span className="select-none">Start</span>
+                <span className="select-none hidden lg:block">Start</span>
               </span>
             </button>
 
@@ -169,7 +169,7 @@ function Pomodoro() {
             </button>
    </div>
 
-            <button disabled={mode === 'focus' && completedPomodoros === 0 ? true : false} className="bg-[#FFA500] disabled:opacity-50 disabled:bg-gray-500 transition-all text-white rounded-lg px-4 py-2 mt-2" onClick={newTimer}>Start new</button>
+            <button disabled={mode === 'focus' && completedPomodoros === 0 ? true : false} className="bg-[#FFA500] disabled:opacity-50 disabled:bg-gray-500 transition-all text-white rounded-lg px-4 py-2 mt-2 md:mt-0" onClick={newTimer}>Start new</button>
           </div>
         </div>
          <p className='my-3 font-thin '>finished pomodoros : {completedPomodoros}</p>

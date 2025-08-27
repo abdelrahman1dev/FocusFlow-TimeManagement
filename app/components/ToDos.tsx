@@ -51,8 +51,8 @@ function ToDos() {
   });
 
   return (
-    <div className="w-100 mx-auto p-4">
-      <div className="text-white flex justify-between items-center mb-6">
+    <div className="w-full max-w-4xl mx-auto p-4">
+      <div className="text-white flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-3">
         <h1 className="text-2xl font-bold">My Tasks</h1>
 
         <Dialog>
@@ -132,17 +132,19 @@ function ToDos() {
         </Dialog>
       </div>
 
-      <div className="bg-gray-800 rounded-lg p-4">
+  <div className="bg-gray-800 rounded-lg p-4">
         {sortedTasks.length === 0 ? (
           <p className="text-gray-400 text-center py-8">
             No tasks yet. Add your first task above! 📝
           </p>
         ) : (
-          <ul className="space-y-1 w-full">
+          <div className="">
             {sortedTasks.map(task => (
-              <ToDoItem key={task.id} {...task} />
+              <div key={task.id} className="w-full">
+                <ToDoItem {...task} />
+              </div>
             ))}
-          </ul>
+          </div>
         )}
         
         {tasks.length > 0 && (

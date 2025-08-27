@@ -36,12 +36,12 @@ export default function Countdown() {
   }, [isRunning, initialDuration]);
 
   return (
-      <div className=" w-fit mx-auto p-4">
+    <div className="w-sm lg:w-lg mx-auto p-4 my-6">
   <div className="text-white">
     <h1 className="text-2xl font-bold capitalize  flex flex-col  justify-between items-start mb-6">Count Down</h1>
     <div className="bg-gray-800 rounded-lg p-4">
-          <div className="flex flex-col items-center gap-4 p-4 text-white">
-      <div className="relative flex items-center justify-center w-40 h-40 mb-4">
+      <div className="flex flex-col items-center gap-4 p-4 text-white">
+    <div className="relative flex items-center justify-center w-32 h-32 md:w-40 md:h-40 mb-4">
         {/* Circular progress ring (fixed box so it doesn't overlap the inputs) */}
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120" aria-hidden>
           <g transform="translate(60,60)">
@@ -61,7 +61,7 @@ export default function Countdown() {
 
   <h1 className="text-3xl font-bold z-10">{formatTime(time)}</h1>
       </div>
-        <div className="flex gap-3 items-center">
+  <div className="flex flex-col md:flex-row gap-3 items-center w-full justify-center">
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-2">
               <button
@@ -73,7 +73,7 @@ export default function Countdown() {
               </button>
               <input
                 type="number"
-                className="border rounded px-2 py-1 w-20 text-center bg-gray-900 text-white"
+                className="border rounded px-2 py-1 w-20 md:w-24 text-center bg-gray-900 text-white"
                 value={minutes}
                 min={0}
                 onChange={(e) => setMinutes(Math.max(0, Number(e.target.value)))}
@@ -100,7 +100,7 @@ export default function Countdown() {
               </button>
               <input
                 type="number"
-                className="border rounded px-2 py-1 w-20 text-center bg-gray-900 text-white"
+                className="border rounded px-2 py-1 w-20 md:w-24 text-center bg-gray-900 text-white"
                 value={seconds}
                 min={0}
                 max={59}
@@ -129,17 +129,17 @@ export default function Countdown() {
             </button>
             <span className="text-xs text-gray-400 text-center">configure</span>
           </div>
-        </div>
+  </div>
 
-      {/* Controls */}
-      <div className="flex gap-2 ">
+  {/* Controls */}
+  <div className="flex gap-2 items-center justify-center">
 
 
         {
           /* single button that animates between Play and Pause */
         }
         <button
-          className="relative px-4 py-2 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-36"
+          className="relative  lg:px-4 lg:h-12  lg:py-2 p-4 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-20 lg:w-36 "
           onClick={() => {
             if (isRunning) return pause();
             const requested = Math.max(0, minutes * 60 + seconds);
@@ -154,13 +154,13 @@ export default function Countdown() {
           {/* Pause layer (visible when running) */}
           <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
             <Pause className="border-none fill-white text-white" />
-            <span className="select-none">Pause</span>
+            <span className="select-none hidden lg:block">Pause</span>
           </span>
 
           {/* Play layer (visible when not running) */}
           <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
             <Play className="border-none fill-white text-white" />
-            <span className="select-none">Start</span>
+            <span className="select-none hidden lg:block">Start</span>
           </span>
         </button>
         <button
