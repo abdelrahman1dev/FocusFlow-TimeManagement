@@ -16,9 +16,9 @@ It helps students, professionals, and teams stay focused with a clean interface,
 ![App Demo](./public/preview/chrome_oFxujRa7Sp.gif)  
 
 ### Screenshots  
-| To-Do List  | Pomodoro Timer | count down | Reports |
+| To-Do List  |  Reports | Pomodoro Timer | count down |
 |-----------|----------------|------------|---------|
-| ![To-Do List](./public/preview/todo-screenshot.png) | ![Reports](./public/preview/report-screenshot.png) | ![ Pomodoro Timer](./public/preview/pomodoro-screenshot.png.png) | ![count down](./public/preview/countdowen-screenshot.png) |
+| ![To-Do List](./public/preview/todo-screenshot.png) | ![Reports](./public/preview/report-screenshot.png) | ![ Pomodoro Timer](./public/preview/pomodoro-screenshot.png) | ![count down](./public/preview/countdowen-screenshot.png) |
 
 ---
 
