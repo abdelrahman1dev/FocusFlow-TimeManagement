@@ -14,7 +14,7 @@ import Dashboard from '../Dashboard/page'
 function TabToggle() {
   return (
    
-          <div className='container flex flex-col w-100 h-auto bg-black p-4 my-4'>
+          <div className='container flex flex-col w-fit h-auto bg-black p-4 my-4'>
         <Tabs defaultValue='ToDo' defaultChecked>
          <div className='flex items-center justify-between'>
              <TabsList>

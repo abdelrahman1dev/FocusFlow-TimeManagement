@@ -2,7 +2,7 @@
 import {  useEffect , useState } from 'react'
 import { useTicker } from '../hooks/useTicker'
 import React from 'react'
-import { CheckIcon, ChevronsUpDownIcon } from "lucide-react"
+import { CheckIcon, ChevronsUpDownIcon, Pause, Play, RotateCw } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -41,6 +41,25 @@ function Pomodoro() {
     
   } = usePomodoroStore();
 
+  // default durations (seconds) for modes, used to compute circular progress
+  const DEFAULT_DURATIONS: Record<string, number> = {
+    focus: 25 * 60,
+    shortBreak: 5 * 60,
+    longBreak: 15 * 60,
+  };
+
+  const [initialDuration, setInitialDuration] = useState<number>(DEFAULT_DURATIONS[mode] ?? 0);
+
+  // keep initialDuration in sync when mode switches (so the ring represents the right full length)
+  useEffect(() => {
+    setInitialDuration(DEFAULT_DURATIONS[mode] ?? 0);
+  }, [mode]);
+
+  // compute progress (0..1) safely
+  const circumference = 2 * Math.PI * 54;
+  const rawProgress = initialDuration > 0 ? (initialDuration - Math.max(0, timeLeft)) / initialDuration : 0;
+  const progress = Math.max(0, Math.min(1, rawProgress));
+
   // Sync combobox value with persisted selectedTask
   useEffect(() => {
     setValue(selectedTask || "");
@@ -68,6 +87,8 @@ function Pomodoro() {
 
  useTicker();
 
+  const [isRotating, setIsRotating] = useState(false);
+
   useEffect(() => {
     console.log(pomodoroHistory)
   },[pomodoroHistory])
@@ -76,7 +97,7 @@ function Pomodoro() {
   const seconds = timeLeft % 60;
 
   return (
-  <div className="max-w-2xl mx-auto p-4">
+  <div className="w-lg mx-auto p-4 my-6">
   <div className="text-white">
     <h1 className="text-2xl font-bold capitalize  flex flex-col  justify-between items-start mb-6">pomodoro timer</h1>
     <div className="bg-gray-800 rounded-lg p-4">
@@ -85,9 +106,9 @@ function Pomodoro() {
         {selectedTask.length > 0 ? (
           <>
             <h1 className="text-2xl font-bold">Current Task</h1>
-            <div className='w-full '>
-              <span className="text-gray-400">{selectedTask + ' '} 
-              {description && <span>- {description}</span>}
+            <div className=' w-30 mx-auto overflow-x-hidden '>
+              <span className="text-gray-400 ">{selectedTask + ' '} 
+              {description && <span  className=' '>- {description}</span>}
               </span>
             </div>
           </>
@@ -96,21 +117,60 @@ function Pomodoro() {
         )}
         <h2 className="text-2xl font-bold">{mode.toUpperCase()}</h2>
 
-        <h1 className="text-2xl font-bold">
-          {minutes}:{seconds.toString().padStart(2, "0")}
-        </h1>
+  <div className="relative flex items-center justify-center w-36 h-36 mx-auto mb-3">
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 120 120" aria-hidden>
+            <g transform="translate(60,60)">
+              <circle r="54" fill="transparent" stroke="#2d3748" strokeWidth="12" />
+              <circle
+                r="54"
+                fill="transparent"
+                stroke="#fb923c"
+                strokeWidth="12"
+                strokeLinecap="round"
+                strokeDasharray={String(circumference)}
+                strokeDashoffset={String((1 - progress) * circumference)}
+                transform="rotate(-90)"
+              />
+            </g>
+          </svg>
+
+          <h1 className="text-2xl font-bold z-10">{minutes}:{seconds.toString().padStart(2, "0")}</h1>
+        </div>
         <p className="text-gray-400">Time Left: {Math.floor(timeLeft / 60)} mins</p>
         <div>
-          <div className='flex space-x-2 justify-center mt-4'>
-          {
-          !isRunning ? <button className="bg-blue-500 text-white rounded-lg px-4 py-2 mt-2" onClick={startTimer}>Start</button> 
-          : <button className="bg-blue-500 text-white rounded-lg px-4 py-2 mt-2" onClick={pauseTimer}>pause</button>
-          }
-          <button className="bg-red-500 text-white rounded-lg px-4 py-2 mt-2" onClick={resetTimer}>Reset</button>
-       
-         </div>
-          <button disabled={mode === 'focus' && completedPomodoros === 0 ? true : false} className="bg-[#FFA500] disabled:opacity-50 disabled:bg-gray-500 transition-all text-white rounded-lg px-4 py-2 mt-2" onClick={newTimer}>Start new</button>
-         
+          <div className='flex flex-col space-x-3 justify-center mt-4 items-center'>
+   <div className='flex flex-row gap-3'>
+             <button
+              className="relative px-4 py-2 rounded-3xl transition-colors duration-300 bg-blue-900 text-white flex items-center justify-center overflow-hidden w-36"
+              onClick={() => (isRunning ? pauseTimer() : startTimer())}
+              aria-pressed={isRunning}
+            >
+              <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+                <Pause className="border-none fill-white text-white" />
+                <span className="select-none">Pause</span>
+              </span>
+
+              <span className={`absolute inset-0 flex items-center justify-center gap-2 transition-all duration-300 ${isRunning ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+                <Play className="border-none fill-white text-white" />
+                <span className="select-none">Start</span>
+              </span>
+            </button>
+
+            <button
+              className="px-2 py-2 bg-red-900 text-white rounded-full"
+              onClick={() => {
+                setIsRotating(true);
+                resetTimer();
+                setTimeout(() => setIsRotating(false), 600);
+              }}
+              aria-label="reset pomodoro"
+            >
+              <RotateCw className={isRotating ? "spin-once" : ""} />
+            </button>
+   </div>
+
+            <button disabled={mode === 'focus' && completedPomodoros === 0 ? true : false} className="bg-[#FFA500] disabled:opacity-50 disabled:bg-gray-500 transition-all text-white rounded-lg px-4 py-2 mt-2" onClick={newTimer}>Start new</button>
+          </div>
         </div>
          <p className='my-3 font-thin '>finished pomodoros : {completedPomodoros}</p>
             <div className="my-4">
