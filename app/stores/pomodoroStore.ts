@@ -6,9 +6,9 @@ type Mode = "focus" | "shortBreak" | "longBreak";
 import { PomodoroSession, PomodoroState } from "./types";
 
 const DURATIONS = {
-  focus: 1 * 60,
-  shortBreak: 1 * 60,
-  longBreak: 1 * 60,
+  focus: 25 * 60,
+  shortBreak: 5 * 60,
+  longBreak: 15 * 60,
 };
 
 export const usePomodoroStore = create<PomodoroState>()(
