@@ -42,9 +42,9 @@ function Pomodoro() {
 
   // default durations (seconds) for modes, used to compute circular progress
   const DEFAULT_DURATIONS: Record<string, number> = {
-    focus: 1 * 60,
-    shortBreak: 1 * 60,
-    longBreak: 1 * 60,
+    focus: 25 * 60,
+    shortBreak: 5 * 60,
+    longBreak: 15 * 60,
   };
 
   const [initialDuration, setInitialDuration] = useState<number>(DEFAULT_DURATIONS[mode] ?? 0);
